@@ -30,20 +30,10 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 
-import { MemoryRouter as Router, Route, Switch } from 'react-router-dom';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://github.com/xpekfdls">
-        Hyeon
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { MemoryRouter as Router, Switch, Route} from 'react-router-dom';
+import Dashboard from './Dashboard';
+import Videoboard from './Videoboard';
+import Chartboard from './Chartboard';
 
 const drawerWidth = 240;
 
@@ -129,7 +119,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dashboard() {
+export default function Home() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -141,8 +131,6 @@ export default function Dashboard() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const VideoPaper = clsx(classes.paper, classes.videoHeight);
 
-  const state = {data: ''};
-
   const handleData = function(input){
     //console.log({state.data});
   };
@@ -151,76 +139,49 @@ export default function Dashboard() {
 
   <Router>
     <div className={classes.root}>
-      <CssBaseline />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="xl" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12} lg={12}>
-              <ReadFile onDataChange = {handleData} />
-            </Grid>
+      
+    <CssBaseline />
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+            Robo-board
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>{mainListItems}</List>
+        <Divider />
+        <List>{secondaryListItems}</List>
+      </Drawer>
+      
 
-            <Grid item xs={12} md={6} lg={6}>
-              <video autoPlay="" loop="" muted="" data-reactid=".0.1.0.0">
-                <source type="video/mp4" data-reactid=".0.1.0.0.0" src="../../data/last_walking_with_FES_1.mp4"/>
-              </video>
-            </Grid>
-
-            <Grid item xs={12} md={6} lg={6}>
-              <Paper className={VideoPaper}>
-              </Paper>
-            </Grid>
-
-            {/* Buttons */}
-            <Grid item xs={1} md={1} lg={1}>
-              <Button color="primary">                
-                <PlayArrowOutlinedIcon />
-              </Button>
-            </Grid>
-
-            {/* Control Bar */}
-            <Grid item xs={5} md={5} lg={5}>
-              <CustomizedSlider/>
-            </Grid>
-
-            {/* Buttons */}
-            <Grid item xs={1} md={1} lg={1}>
-              <Button color="primary">                
-                <PlayArrowOutlinedIcon />
-              </Button>
-            </Grid>
-
-            {/* Control Bar */}
-            <Grid item xs={5} md={5} lg={5}>
-              <CustomizedSlider/>
-            </Grid>
-
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
+      <Switch>
+        <Route path="/Dashboard" component={Dashboard} />
+        <Route path="/Videoboard" component={Videoboard} />
+        <Route path="/Chartboard" component={Chartboard} />
+      </Switch> 
     </div>
-
   </Router>
   );
 }

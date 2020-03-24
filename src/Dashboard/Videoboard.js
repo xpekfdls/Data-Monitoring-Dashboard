@@ -23,7 +23,7 @@ import Button from '@material-ui/core/Button';
 import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
 
 import Counter from './Counter'
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems , secondaryListItems } from './listItems';
 import ReadFile from './ReadFile';
 import CustomizedSlider from './CustomizedSlider';
 import Chart from './Chart';
@@ -129,15 +129,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dashboard() {
+export default function Videoboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const VideoPaper = clsx(classes.paper, classes.videoHeight);
 
@@ -152,67 +146,35 @@ export default function Dashboard() {
   <Router>
     <div className={classes.root}>
       <CssBaseline />
+      
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="xl" className={classes.container}>
+          <Grid>
+          </Grid>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12} lg={12}>
               <ReadFile onDataChange = {handleData} />
             </Grid>
 
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={12} lg={12}>
               <video autoPlay="" loop="" muted="" data-reactid=".0.1.0.0">
                 <source type="video/mp4" data-reactid=".0.1.0.0.0" src="../../data/last_walking_with_FES_1.mp4"/>
               </video>
             </Grid>
 
-            <Grid item xs={12} md={6} lg={6}>
-              <Paper className={VideoPaper}>
-              </Paper>
-            </Grid>
-
-            {/* Buttons */}
-            <Grid item xs={1} md={1} lg={1}>
-              <Button color="primary">                
-                <PlayArrowOutlinedIcon />
-              </Button>
-            </Grid>
-
-            {/* Control Bar */}
-            <Grid item xs={5} md={5} lg={5}>
-              <CustomizedSlider/>
-            </Grid>
-
-            {/* Buttons */}
-            <Grid item xs={1} md={1} lg={1}>
-              <Button color="primary">                
-                <PlayArrowOutlinedIcon />
-              </Button>
-            </Grid>
-
-            {/* Control Bar */}
-            <Grid item xs={5} md={5} lg={5}>
-              <CustomizedSlider/>
-            </Grid>
-
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
+            <Grid item xs={12} md={12} lg={12}>
               <Paper className={fixedHeightPaper}>
                 <Chart />
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
+
+            <Grid item xs={12} md={12} lg={12}>
               <Paper className={fixedHeightPaper}>
-                <Deposits />
+                <Chart />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
+
           </Grid>
           <Box pt={4}>
             <Copyright />
